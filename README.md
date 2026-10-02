@@ -1,4 +1,4 @@
-# Amiro HireFlow AI
+# HireFlow | Amiro HireFlow AI
 
 HireFlow is Amiro Tech Solutions' recruiter workspace for managing jobs, applicants, screening, interviews and offers in one hiring pipeline. This repository contains the original HTML reference prototype and a new React + FastAPI + PostgreSQL application foundation.
 
@@ -20,7 +20,7 @@ https://amiro-hireflow-poc.naveenmooram111.chatgpt.site
 
 The original `dist/index.html` is retained as a UI reference, not the active app. Matching is deterministic and uses self-reported or resume-extracted profile skills until recruiter verification; it is not AI and never makes a hiring decision. Resume extraction supports text-based PDF/DOCX only, not OCR or an LLM. Email templates and personalized drafts work, but nothing is sent. Interviews are persisted, but calendar events and meeting links are not created. Offer approval/acceptance works, but generated signed offer documents and notification delivery are not connected.
 
-Resume upload fails closed unless both ClamAV is reachable and `RESUME_ENCRYPTION_KEY` is valid. Extracted skills/experience are candidate-provided document text and remain unverified. Vercel does not run the Compose ClamAV service; configure a reachable external ClamAV service before enabling resume uploads, otherwise resume intake will remain disabled. The current local preview uses temporary SQLite and also has scanning/key settings unset.
+Resume upload fails closed unless both ClamAV is reachable and `RESUME_ENCRYPTION_KEY` is valid. Extracted skills/experience are candidate-provided document text and remain unverified. Vercel does not provision a malware-scanning daemon; configure a reachable external ClamAV service before enabling resume uploads, otherwise resume intake will remain disabled. The current local preview uses temporary SQLite and also has scanning/key settings unset.
 
 ## Deploy with Vercel and Supabase
 

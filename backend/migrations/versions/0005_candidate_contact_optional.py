@@ -11,7 +11,11 @@ depends_on = None
 
 def upgrade() -> None:
     connection = op.get_bind()
-    email_column = next(column for column in sa.inspect(connection).get_columns("candidates") if column["name"] == "email")
+    email_column = next(
+        column
+        for column in sa.inspect(connection).get_columns("candidates")
+        if column["name"] == "email"
+    )
     if email_column["nullable"]:
         return
     if connection.dialect.name == "sqlite":
@@ -24,7 +28,9 @@ def upgrade() -> None:
 def downgrade() -> None:
     connection = op.get_bind()
     if connection.execute(sa.text("SELECT COUNT(*) FROM candidates WHERE email IS NULL")).scalar():
-        raise RuntimeError("Cannot require candidate email while resume imports without contact details exist")
+        raise RuntimeError(
+            "Cannot require candidate email while resume imports without contact details exist"
+        )
     if connection.dialect.name == "sqlite":
         with op.batch_alter_table("candidates", recreate="always") as batch:
             batch.alter_column("email", existing_type=sa.String(length=254), nullable=False)

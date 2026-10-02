@@ -19,7 +19,12 @@ def upgrade() -> None:
     op.create_table(
         "users",
         sa.Column("id", sa.String(length=36), primary_key=True),
-        sa.Column("organization_id", sa.String(length=36), sa.ForeignKey("organizations.id", ondelete="CASCADE"), nullable=False),
+        sa.Column(
+            "organization_id",
+            sa.String(length=36),
+            sa.ForeignKey("organizations.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
         sa.Column("email", sa.String(length=254), nullable=False),
         sa.Column("name", sa.String(length=180), nullable=False),
         sa.Column("password_hash", sa.String(length=255), nullable=False),
@@ -32,7 +37,12 @@ def upgrade() -> None:
     op.create_table(
         "jobs",
         sa.Column("id", sa.String(length=36), primary_key=True),
-        sa.Column("organization_id", sa.String(length=36), sa.ForeignKey("organizations.id", ondelete="CASCADE"), nullable=False),
+        sa.Column(
+            "organization_id",
+            sa.String(length=36),
+            sa.ForeignKey("organizations.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
         sa.Column("title", sa.String(length=180), nullable=False),
         sa.Column("location", sa.String(length=180), nullable=False),
         sa.Column("employment_type", sa.String(length=80), nullable=False),
@@ -44,8 +54,18 @@ def upgrade() -> None:
     op.create_table(
         "candidates",
         sa.Column("id", sa.String(length=36), primary_key=True),
-        sa.Column("organization_id", sa.String(length=36), sa.ForeignKey("organizations.id", ondelete="CASCADE"), nullable=False),
-        sa.Column("job_id", sa.String(length=36), sa.ForeignKey("jobs.id", ondelete="SET NULL"), nullable=True),
+        sa.Column(
+            "organization_id",
+            sa.String(length=36),
+            sa.ForeignKey("organizations.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+        sa.Column(
+            "job_id",
+            sa.String(length=36),
+            sa.ForeignKey("jobs.id", ondelete="SET NULL"),
+            nullable=True,
+        ),
         sa.Column("name", sa.String(length=180), nullable=False),
         sa.Column("email", sa.String(length=254), nullable=False),
         sa.Column("role_title", sa.String(length=180), nullable=False),
@@ -65,9 +85,24 @@ def upgrade() -> None:
     op.create_table(
         "screenings",
         sa.Column("id", sa.String(length=36), primary_key=True),
-        sa.Column("organization_id", sa.String(length=36), sa.ForeignKey("organizations.id", ondelete="CASCADE"), nullable=False),
-        sa.Column("candidate_id", sa.String(length=36), sa.ForeignKey("candidates.id", ondelete="CASCADE"), nullable=False),
-        sa.Column("recruiter_id", sa.String(length=36), sa.ForeignKey("users.id", ondelete="RESTRICT"), nullable=False),
+        sa.Column(
+            "organization_id",
+            sa.String(length=36),
+            sa.ForeignKey("organizations.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+        sa.Column(
+            "candidate_id",
+            sa.String(length=36),
+            sa.ForeignKey("candidates.id", ondelete="CASCADE"),
+            nullable=False,
+        ),
+        sa.Column(
+            "recruiter_id",
+            sa.String(length=36),
+            sa.ForeignKey("users.id", ondelete="RESTRICT"),
+            nullable=False,
+        ),
         sa.Column("call_status", sa.String(length=40), nullable=False),
         sa.Column("current_ctc", sa.String(length=60), nullable=False),
         sa.Column("expected_ctc", sa.String(length=60), nullable=False),

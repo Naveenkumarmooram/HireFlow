@@ -1,2 +1,40 @@
-.mobile-more{display:none!important}.mobile-more-menu{display:none}
-@media(max-width:560px){.mobile-more{display:flex!important}.mobile-more-menu{position:fixed;z-index:20;display:grid;right:12px;bottom:68px;min-width:190px;padding:6px;background:#fff;border:1px solid #dfe6dc;border-radius:7px;box-shadow:0 10px 35px #173b3226}.mobile-more-menu button{height:40px;border:0;border-radius:4px;background:#fff;color:#395347;display:flex;align-items:center;gap:10px;padding:0 10px;text-align:left;font-size:11px}.mobile-more-menu button:hover{background:#f0f5ed}}
+.mobile-more {
+  display: none !important;
+}
+.mobile-more-menu {
+  display: none;
+}
+@media (max-width: 560px) {
+  .mobile-more {
+    display: flex !important;
+  }
+  .mobile-more-menu {
+    position: fixed;
+    z-index: 20;
+    display: grid;
+    right: 12px;
+    bottom: 68px;
+    min-width: 190px;
+    padding: 6px;
+    background: #fff;
+    border: 1px solid #dfe6dc;
+    border-radius: 7px;
+    box-shadow: 0 10px 35px #173b3226;
+  }
+  .mobile-more-menu button {
+    height: 40px;
+    border: 0;
+    border-radius: 4px;
+    background: #fff;
+    color: #395347;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 0 10px;
+    text-align: left;
+    font-size: 11px;
+  }
+  .mobile-more-menu button:hover {
+    background: #f0f5ed;
+  }
+}

@@ -1,1 +1,10 @@
-.success-symbol{width:40px;height:40px;display:grid;place-items:center;margin-bottom:18px;border-radius:50%;background:#e1f1e3;color:#41764c}
+.success-symbol {
+  width: 40px;
+  height: 40px;
+  display: grid;
+  place-items: center;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background: #e1f1e3;
+  color: #41764c;
+}

@@ -2,8 +2,7 @@
 
 from alembic import op
 
-from app import models
-from app.database import Base
+from migrations.legacy_schema import Base
 
 revision = "0002_ats_workflows"
 down_revision = "0001_initial"
@@ -12,7 +11,9 @@ depends_on = None
 
 
 def upgrade() -> None:
-    workflow_tables = [table for table in Base.metadata.sorted_tables if table.name != "resume_documents"]
+    workflow_tables = [
+        table for table in Base.metadata.sorted_tables if table.name != "resume_documents"
+    ]
     Base.metadata.create_all(bind=op.get_bind(), tables=workflow_tables)
 
 

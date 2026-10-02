@@ -8,3 +8,11 @@
 **/venv/
 frontend/node_modules/
 frontend/dist/
+**/.ruff_cache/
+**/coverage/
+**/.coverage
+**/*.db
+**/*.db-shm
+**/*.db-wal
+**/.vercel/
+dist/

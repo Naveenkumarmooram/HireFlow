@@ -2,6 +2,21 @@
 
 Deploy two Vercel projects from the same GitHub repository. Supabase supplies PostgreSQL; the browser talks only to FastAPI. Supabase Auth, Storage and Edge Functions are not used.
 
+## GitHub import settings at a glance
+
+Import the same repository twice. Select the application folder using **Root Directory → Edit** before clicking Deploy.
+
+| Vercel setting | Frontend project | Backend project |
+| --- | --- | --- |
+| Root Directory | `frontend` | `backend` |
+| Framework Preset | Vite | FastAPI |
+| Install Command | `npm ci` | Default (override off) |
+| Build Command | `npm run build` | Default (override off) |
+| Output Directory | `dist` | Default (override off) |
+| Include files outside Root Directory | Off | Off |
+
+Do not select `.` as the root. Supabase is the database provider, not a third source-code deployment. The two folders include their own README, Vercel configuration and environment examples. Existing local Vercel project links are not required for GitHub imports.
+
 ## 1. Provision and protect the database
 
 Create separate staging and production Supabase projects. In **Connect**, copy the **Transaction pooler** URI (port 6543). Change its scheme to `postgresql+psycopg://`, URL-encode special characters in the database password, and add `?sslmode=require` (or `&sslmode=require` when a query already exists).
@@ -43,11 +58,11 @@ Store the encryption key in your secret manager and recovery procedure. Losing i
 Take a backup and rehearse the migration against staging first. On a trusted machine, set the production environment privately in `backend/.env`, install runtime requirements, then run from `backend`:
 
 ```sh
-python build.py
+python migrate.py
 python -m alembic current
 ```
 
-Despite its historical filename, `build.py` is an explicit database migration command, not a Vercel build hook. It upgrades to Alembic head and is repeatable. Revision 0006 invalidates all older-format access tokens and refuses ambiguous duplicate user emails. Reconcile duplicates before upgrading; it does not delete or merge identities.
+`migrate.py` is an explicit database migration command. Vercel builds and API startup do not run it. It upgrades to Alembic head and is repeatable. Revision 0006 invalidates all older-format access tokens and refuses ambiguous duplicate user emails. Reconcile duplicates before upgrading; it does not delete or merge identities.
 
 For the first deployment only, additionally set `BOOTSTRAP_ORG_NAME`, `BOOTSTRAP_ADMIN_EMAIL`, and a unique `BOOTSTRAP_ADMIN_PASSWORD` of at least 16 characters in that local environment:
 
@@ -63,7 +78,7 @@ The command refuses to create a second bootstrap organisation once users exist. 
 - Root Directory: `backend`.
 - Framework: FastAPI (entrypoint declared in `pyproject.toml`).
 - Python: 3.12, pinned by `.python-version`.
-- **Clear any old Build Command override such as `python build.py`.** Leave Build Command, Install Command and Output Directory on framework defaults.
+- **Clear any old Build Command override such as `python build.py` or `python migrate.py`.** Leave Build Command, Install Command and Output Directory on framework defaults.
 - Set the production environment values from step 2, then deploy.
 - Check `https://YOUR-API.vercel.app/api/live` and `/api/health`. The latter checks the database.
 

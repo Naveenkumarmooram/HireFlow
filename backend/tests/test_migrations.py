@@ -24,7 +24,7 @@ def test_migrate_empty_database_and_repeat(tmp_path):
     }
     for _ in range(2):
         result = subprocess.run(
-            [sys.executable, "build.py"],
+            [sys.executable, "migrate.py"],
             cwd=ROOT,
             env=env,
             capture_output=True,
@@ -55,7 +55,7 @@ def test_bootstrap_is_explicit_and_existing_credentials_are_preserved(tmp_path):
         "BOOTSTRAP_ADMIN_EMAIL": "admin@example.com",
         "BOOTSTRAP_ADMIN_PASSWORD": "isolated-test-password-only",
     }
-    for args in [["build.py"], ["-m", "app.bootstrap"], ["-m", "app.bootstrap"]]:
+    for args in [["migrate.py"], ["-m", "app.bootstrap"], ["-m", "app.bootstrap"]]:
         result = subprocess.run(
             [sys.executable, *args], cwd=ROOT, env=env, capture_output=True, text=True
         )

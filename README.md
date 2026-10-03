@@ -4,6 +4,33 @@ A recruiter workspace built with React, TypeScript, FastAPI and PostgreSQL. The 
 
 This repository contains the application, migrations, tests and deployment instructions. The obsolete HTML prototype and starter assets have been removed.
 
+## Import into Vercel
+
+Import this GitHub repository **twice**, creating one Vercel project for each application. Do not deploy the repository root.
+
+| | Frontend | Backend |
+| --- | --- | --- |
+| Project | `hireflow-web` | `hireflow-api` |
+| Root Directory | **`frontend`** | **`backend`** |
+| Framework | Vite | FastAPI |
+| Runtime | Node.js 24 | Python 3.12 |
+| Install | `npm ci` | Framework default |
+| Build | `npm run build` | Framework default; no migration command |
+| Output | `dist` | Framework default |
+| Configuration | [frontend README](frontend/README.md) | [backend README](backend/README.md) |
+
+```text
+HireFlow/
+├── frontend/    # Browser UI, npm dependencies, Vite and frontend Vercel configuration
+├── backend/     # Python API, authentication, database models and migrations
+├── docs/        # Deployment, operations and release guidance
+└── .github/     # Separate frontend/backend CI jobs
+```
+
+Each application owns its dependencies, tests, environment examples and Vercel configuration. Neither needs source files from the other directory. The frontend calls the backend over HTTPS; only the backend connects to Supabase PostgreSQL.
+
+Set `VITE_API_URL` on the frontend to the backend URL plus `/api`. Set `CORS_ORIGINS` on the backend to the exact frontend origin. Follow the [deployment guide](docs/DEPLOYMENT.md) to provision the database and initial admin before testing.
+
 ## Run locally
 
 Requires Python 3.12+ and Node.js 22.12+ (CI uses Python 3.12 and Node.js 24).
@@ -18,7 +45,7 @@ Set a generated `JWT_SECRET`, your organisation name, initial admin email and a 
 
 ```powershell
 cd backend
-../.venv/Scripts/python build.py
+../.venv/Scripts/python migrate.py
 ../.venv/Scripts/python -m app.bootstrap
 ../.venv/Scripts/python -m uvicorn app.main:app --reload --no-access-log --port 8000
 ```

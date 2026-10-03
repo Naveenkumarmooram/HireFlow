@@ -1,0 +1,17 @@
+# Local-only files must never enter a deployment upload.
+.env
+.env.*
+.venv/
+venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+*.db
+*.db-*
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage/
+tests/
+requirements-dev.txt
+README.md

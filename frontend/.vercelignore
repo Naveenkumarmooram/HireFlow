@@ -1,0 +1,8 @@
+# Install and build from source on Vercel.
+.env
+.env.*
+node_modules/
+dist/
+coverage/
+*.log
+README.md
